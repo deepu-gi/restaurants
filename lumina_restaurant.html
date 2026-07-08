@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuttanad Shaap | Authentic Kerala Toddy & Spice</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Rokkitt:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1c1917',     /* Stone 900 */
+                            cream: '#FAF7F2',    /* Warm off-white */
+                            red: '#C83218',      /* Spicy Red */
+                            redHover: '#99240F',
+                            green: '#2E4A22',    /* Banana Leaf Green */
+                            yellow: '#EAB308',   /* Turmeric */
+                            gray: '#57534E'      /* Stone 600 */
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Rokkitt"', 'serif'],
+                        sans: ['"Outfit"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF7F2;
+            color: #1c1917;
+        }
+        
+        /* Smooth View Transitions */
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .view-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Nav Link Underline Effect - Changed to Yellow */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -4px;
+            left: 0;
+            background-color: #EAB308;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after, .nav-link.active-link::after {
+            width: 100%;
+        }
+
+        /* Image Hover Zoom */
+        .img-container {
+            overflow: hidden;
+        }
+        .img-container img {
+            transition: transform 0.7s ease;
+        }
+        .img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Rustic Pattern Background */
+        .pattern-bg {
+            background-color: #FAF7F2;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232e4a22' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="font-sans antialiased flex flex-col min-h-screen bg-brand-cream">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-brand-green/95 backdrop-blur-md text-white py-4 shadow-xl" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-12">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="navigateTo('home')">
+                    <span class="font-serif text-3xl font-bold tracking-wider text-brand-yellow">Kuttanad Shaap.</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-10 items-center">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-link active-link text-sm uppercase tracking-widest font-medium hover:text-brand-yellow transition-colors">Home</button>
+                    <button onclick="navigateTo('menu')" id="nav-menu" class="nav-link text-sm uppercase tracking-widest font-medium hover:text-brand-yellow transition-colors">Our Menu</button>
+                    <button onclick="navigateTo('menu')" class="bg-brand-red text-white px-6 py-2 rounded-sm text-sm uppercase tracking-widest font-bold hover:bg-brand-redHover shadow-lg transition-all">Order Now</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-brand-cream hover:text-brand-yellow focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-green border-t border-brand-green/50">
+            <div class="px-2 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col text-center">
+                <button onclick="navigateTo('home')" class="block px-3 py-4 text-base font-medium tracking-widest uppercase hover:text-brand-yellow">Home</button>
+                <button onclick="navigateTo('menu')" class="block px-3 py-4 text-base font-medium tracking-widest uppercase hover:text-brand-yellow">Our Menu</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-grow">
+        
+        <!-- ============================================== -->
+        <!-- VIEW 1: HOME PAGE                              -->
+        <!-- ============================================== -->
+        <div id="home-view" class="view-section active">
+            
+            <!-- Hero Section -->
+            <section class="relative h-screen flex items-center justify-center">
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1920&q=80" alt="Kerala Backwaters" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
+                </div>
+                
+                <div class="relative z-10 text-center px-4 max-w-4xl mx-auto mt-16">
+                    <p class="text-brand-yellow uppercase tracking-[0.3em] text-sm md:text-base mb-4 font-bold drop-shadow-md">Pure Kallu. Authentic Spice.</p>
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-lg">The True Taste of <br><span class="text-brand-yellow">Kerala.</span></h1>
+                    <p class="text-gray-100 text-lg md:text-xl font-medium mb-10 max-w-2xl mx-auto drop-shadow-md">Experience the rustic charm and fiery flavors of a traditional backwater toddy shop.</p>
+                    <button onclick="navigateTo('menu')" class="bg-brand-red text-white hover:bg-brand-redHover px-10 py-4 rounded-sm shadow-xl uppercase tracking-widest text-sm font-bold transition-all duration-300 transform hover:-translate-y-1">
+                        View Shaap Menu
+                    </button>
+                </div>
+            </section>
+
+            <!-- Motto / About Section -->
+            <section class="py-24 pattern-bg border-b border-gray-200">
+                <div class="max-w-4xl mx-auto px-4 text-center">
+                    <!-- Chili SVG Icon -->
+                    <svg class="w-14 h-14 mx-auto text-brand-red mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.828 8.9a2 2 0 102.83 2.83"></path>
+                    </svg>
+                    <h2 class="text-3xl md:text-5xl font-serif font-bold text-brand-dark mb-8">"A Spicy Symphony in Every Bite."</h2>
+                    <p class="text-brand-gray text-lg leading-relaxed font-medium">
+                        Welcome to <span class="text-brand-red font-bold">Kuttanad Shaap</span>, where traditional flavors meet the rustic charm of Kerala's backwaters. From freshly tapped palm toddy to fiery curries prepared in earthen kalchattis, we bring you an unadulterated culinary experience. Dive into our legendary Karimeen Pollichathu, spicy Beef Ularthiyathu, and the iconic Kappa. It's bold, it's spicy, and it's purely Kerala.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Photo Gallery Section -->
+            <section class="py-20 bg-brand-cream">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <p class="text-brand-red uppercase tracking-[0.2em] text-sm font-bold mb-2">Rustic Vibes & Fiery Flavors</p>
+                        <h3 class="text-4xl font-serif font-bold text-brand-dark">From the Shaap</h3>
+                    </div>
+
+                    <!-- CSS Grid Gallery -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        <!-- Gallery Item 1 -->
+                        <div class="img-container h-80 rounded shadow-lg cursor-pointer relative group border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=800&q=80" alt="Toddy in Clay Pot" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-brand-green/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white font-serif text-2xl font-bold">Fresh Kallu</span>
+                            </div>
+                        </div>
+                        <!-- Gallery Item 2 -->
+                        <div class="img-container h-80 rounded shadow-lg cursor-pointer relative group border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?auto=format&fit=crop&w=800&q=80" alt="Spicy Fish Fry" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-brand-red/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white font-serif text-2xl font-bold">Spicy Meen Fry</span>
+                            </div>
+                        </div>
+                        <!-- Gallery Item 3 -->
+                        <div class="img-container h-80 rounded shadow-lg cursor-pointer relative group border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=800&q=80" alt="Beef Roast" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-brand-green/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white font-serif text-2xl font-bold">Shaap Beef Roast</span>
+                            </div>
+                        </div>
+                        <!-- Gallery Item 4 -->
+                        <div class="img-container h-80 rounded shadow-lg cursor-pointer relative group border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1589301760014-d929f39ce9b1?auto=format&fit=crop&w=800&q=80" alt="Banana Leaf Meal" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-brand-red/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white font-serif text-2xl font-bold">Traditional Meals</span>
+                            </div>
+                        </div>
+                        <!-- Gallery Item 5 -->
+                        <div class="img-container h-80 rounded shadow-lg cursor-pointer relative group border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?auto=format&fit=crop&w=800&q=80" alt="Tapioca" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-brand-green/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white font-serif text-2xl font-bold">Kappa Puzhungiyathu</span>
+                            </div>
+                        </div>
+                        <!-- Gallery Item 6 -->
+                        <div class="img-container h-80 rounded shadow-lg cursor-pointer relative group border-4 border-white">
+                            <img src="https://images.unsplash.com/photo-1565557612117-0639999f8d50?auto=format&fit=crop&w=800&q=80" alt="Crab Roast" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-brand-red/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white font-serif text-2xl font-bold">Njandu Roast</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW 2: MENU PAGE                              -->
+        <!-- ============================================== -->
+        <div id="menu-view" class="view-section pt-32 pb-24 pattern-bg min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Menu Header -->
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-serif font-bold text-brand-dark mb-4">Shaap Menu</h1>
+                    <div class="w-24 h-1 bg-brand-red mx-auto mb-6"></div>
+                    <p class="text-brand-gray max-w-2xl mx-auto text-lg font-medium">Authentic, spicy, and prepared fresh in earthen pots. Perfect companions for our fresh Kallu.</p>
+                </div>
+
+                <!-- Menu Categories -->
+                <div class="space-y-24">
+                    
+                    <!-- Kallu & Touchings -->
+                    <section class="bg-white p-8 md:p-12 rounded-lg shadow-xl border-t-8 border-brand-green">
+                        <h2 class="text-3xl font-serif text-brand-green border-b-2 border-brand-green/20 pb-3 mb-8 font-bold">Kallu & Thottu Koottan (Drinks & Bites)</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=200&q=80" alt="Fresh Kallu" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Fresh Palm Toddy (Kallu)</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹150</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Sweet, mildly alcoholic coconut sap, tapped fresh every morning. Served chilled in a mud jug.</p>
+                                </div>
+                            </div>
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?auto=format&fit=crop&w=200&q=80" alt="Kappa" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Kappa Puzhungiyathu</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹120</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Steamed tapioca chunks served with fiery Kanthari (bird's eye chili) and shallot chutney.</p>
+                                </div>
+                            </div>
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1559742811-822873691df8?auto=format&fit=crop&w=200&q=80" alt="Kakka Irachi" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Kakka Irachi Ularthiyathu</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹220</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Fresh backwater clam meat slow-roasted with coconut bits, fennel, and crushed black pepper.</p>
+                                </div>
+                            </div>
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1627308595229-7830f5c910ae?auto=format&fit=crop&w=200&q=80" alt="Netholi Fry" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Netholi Fry (Kozhuva)</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹180</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Crispy fried anchovies heavily marinated in red chili paste, garlic, and fresh curry leaves.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Main Courses -->
+                    <section class="bg-white p-8 md:p-12 rounded-lg shadow-xl border-t-8 border-brand-red">
+                        <h2 class="text-3xl font-serif text-brand-red border-b-2 border-brand-red/20 pb-3 mb-8 font-bold">Shaap Specials (Mains)</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?auto=format&fit=crop&w=200&q=80" alt="Karimeen" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Karimeen Pollichathu</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹450</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Pearl spot fish marinated in spicy onion-tomato masala, wrapped in a banana leaf, and pan-grilled.</p>
+                                </div>
+                            </div>
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=200&q=80" alt="Beef Roast" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Shaap Beef Ularthiyathu</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹280</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">The legendary Kerala beef roast, dark and rich, cooked slowly with roasted coconut, shallots, and secret spices.</p>
+                                </div>
+                            </div>
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1589301760014-d929f39ce9b1?auto=format&fit=crop&w=200&q=80" alt="Tharavu Roast" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Kuttanadan Tharavu Roast</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹350</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Traditional duck roast cooked in thick, spicy coconut milk gravy. A Kuttanad specialty.</p>
+                                </div>
+                            </div>
+                            <!-- Menu Item -->
+                            <div class="flex gap-4 items-start group">
+                                <img src="https://images.unsplash.com/photo-1565557612117-0639999f8d50?auto=format&fit=crop&w=200&q=80" alt="Pork Varattiyathu" class="w-24 h-24 object-cover rounded shadow-md group-hover:shadow-lg transition-shadow border-2 border-brand-cream">
+                                <div class="flex-grow">
+                                    <div class="flex justify-between items-baseline mb-1 border-b border-dotted border-gray-400 pb-1">
+                                        <h3 class="font-serif text-xl font-bold text-brand-dark">Pork Varattiyathu</h3>
+                                        <span class="text-brand-red font-bold text-lg pl-4">₹300</span>
+                                    </div>
+                                    <p class="text-sm text-brand-gray mt-2">Tender pork cubes cooked down until dry with coriander powder, red chili, and Kerala garam masala.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark text-brand-cream pt-16 pb-8 border-t-4 border-brand-red mt-auto relative overflow-hidden">
+        <!-- Banana leaf subtle accent in background -->
+        <div class="absolute top-0 right-0 opacity-10 pointer-events-none">
+             <svg width="400" height="400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 19.93C7.05 19.43 4 16.05 4 12C4 7.95 7.05 4.57 11 4.07V19.93ZM13 4.07C16.95 4.57 20 7.95 20 12C20 16.05 16.95 19.43 13 19.93V4.07Z"/>
+             </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-start gap-8 text-center md:text-left relative z-10">
+            <div class="mx-auto md:mx-0">
+                <span class="font-serif text-4xl font-bold tracking-wider text-brand-yellow block mb-2">Kuttanad Shaap.</span>
+                <p class="text-gray-400 text-sm max-w-xs mt-4">The authentic backwater culinary experience. Spicy, bold, and unapologetically Kerala.</p>
+            </div>
+            
+            <div class="flex flex-col gap-2 text-sm text-gray-300 mx-auto md:mx-0">
+                <p class="uppercase tracking-widest text-brand-red font-bold mb-2">Shaap Timings</p>
+                <p>Mon - Sun: 9:00 AM - 9:00 PM</p>
+                <p class="text-brand-yellow mt-2 font-medium">Fresh Kallu available from 9 AM!</p>
+            </div>
+
+            <div class="flex flex-col gap-2 text-sm text-gray-300 mx-auto md:mx-0">
+                <p class="uppercase tracking-widest text-brand-red font-bold mb-2">Location & Contact</p>
+                <p>Lake Road, Kuttanad</p>
+                <p>Alleppey, Kerala 688504</p>
+                <p class="mt-2 text-brand-yellow">+91 98765 43210</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-xs relative z-10">
+            &copy; <span id="year"></span> Kuttanad Toddy Shop. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript for Navigation and Interactivity -->
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Single Page Application Navigation Logic
+        function navigateTo(viewId) {
+            // 1. Hide all views
+            const views = document.querySelectorAll('.view-section');
+            views.forEach(view => {
+                view.classList.remove('active');
+                // Optional: slight delay for fade out before showing new
+                setTimeout(() => {
+                    view.style.display = 'none';
+                }, 300);
+            });
+
+            // 2. Show target view after small delay to allow fade out
+            setTimeout(() => {
+                const targetView = document.getElementById(viewId + '-view');
+                if(targetView) {
+                    targetView.style.display = 'block';
+                    // Trigger reflow to restart animation
+                    void targetView.offsetWidth;
+                    targetView.classList.add('active');
+                }
+                
+                // Scroll to top when changing pages
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 300);
+
+            // 3. Update Navigation Active States
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active-link');
+                link.classList.remove('text-brand-gold');
+            });
+            
+            const activeNav = document.getElementById('nav-' + viewId);
+            if(activeNav) {
+                activeNav.classList.add('active-link');
+                activeNav.classList.add('text-brand-gold');
+            }
+
+            // 4. Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (!mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize state
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ensure proper initial display state without transition flash
+            document.getElementById('menu-view').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
